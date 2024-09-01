@@ -57,7 +57,8 @@ function draw() {
         if (index === 0) {
             ctx.drawImage(headImage, part.x, part.y, box, box); 
         } else {
-            ctx.drawImage(headImage, part.x, part.y, box, box);
+            ctx.fillStyle = 'lime';
+            ctx.fillRect(part.x, part.y, box, box);
         }
     });
 
@@ -85,15 +86,4 @@ function draw() {
     }
 }
 
-let gameInterval;
-
-document.getElementById('startButton').addEventListener('click', function() {
-    if (!gameInterval) {
-        gameInterval = setInterval(draw, 250);
-    }
-});
-
-document.getElementById('pauseButton').addEventListener('click', function() {
-    clearInterval(gameInterval);
-    gameInterval = null;
-});
+const game = setInterval(draw, 100);
