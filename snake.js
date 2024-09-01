@@ -11,7 +11,7 @@ let score = 0;
 
 const headImage = new Image();
 headImage.src = 'crazybitch.png'; 
-const foodImage = new Image(); // Create a new Image object for the food
+const foodImage = new Image(); 
 foodImage.src = 'R.png';
 
 const bodyImages = [];
@@ -61,7 +61,6 @@ function draw() {
         }
     });
 
-    // Draw food
     ctx.drawImage(foodImage, food.x, food.y, box, box);
 
     // Move snake
@@ -73,7 +72,6 @@ function draw() {
 
     snake.unshift(head);
 
-    // Check if snake eats the food
     if (head.x === food.x && head.y === food.y) {
         score += 1;
         generateFood();
@@ -81,11 +79,21 @@ function draw() {
         snake.pop();
     }
 
-    // Check collision with walls or itself
     if (head.x < 0 || head.x >= canvasSize || head.y < 0 || head.y >= canvasSize || snake.slice(1).some(part => part.x === head.x && part.y === head.y)) {
         clearInterval(game);
         alert(`Game Over! Score: ${score}`);
     }
 }
 
-const game = setInterval(draw, 250);
+let gameInterval;
+
+document.getElementById('startButton').addEventListener('click', function() {
+    if (!gameInterval) {
+        gameInterval = setInterval(draw, 250);
+    }
+});
+
+document.getElementById('pauseButton').addEventListener('click', function() {
+    clearInterval(gameInterval);
+    gameInterval = null;
+});
