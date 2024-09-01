@@ -17,8 +17,9 @@
     <div class="game-container">
         <canvas id="gameCanvas" width="800" height="800"></canvas>
         <div>
-            <button id="startButton">Start</button>
-            <button id="pauseButton">Pause</button>
+            <button id="startButton" onclick="startGame()">Start</button>
+            <button id="pauseButton" onclick="togglePause()">Pause</button>
+            <button id="restartButton" onclick="restartGame()">Restart</button>
         </div>
     </div>
     <script src="snake.js"></script>
