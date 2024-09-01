@@ -2,7 +2,7 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
 const box = 20;
-const canvasSize = 400;
+const canvasSize = 800;
 
 let snake = [{ x: box * 5, y: box * 5 }];
 let direction = 'RIGHT';
@@ -18,6 +18,31 @@ function changeDirection(event) {
     if (keyPressed === 39 && direction !== 'LEFT') direction = 'RIGHT';
     if (keyPressed === 40 && direction !== 'UP') direction = 'DOWN';
 }
+
+function generateFood() {
+    let newFood;
+    let isFoodOnSnake;
+    
+    do {
+        isFoodOnSnake = false;
+        newFood = {
+            x: Math.floor(Math.random() * canvasSize / box) * box,
+            y: Math.floor(Math.random() * canvasSize / box) * box
+        };
+
+        // Check if the new food position is on the snake
+        snake.forEach(part => {
+            if (part.x === newFood.x && part.y === newFood.y) {
+                isFoodOnSnake = true;
+            }
+        });
+
+    } while (isFoodOnSnake);
+
+    food = newFood;
+}
+
+generateFood();
 
 function draw() {
     ctx.clearRect(0, 0, canvasSize, canvasSize);
@@ -44,7 +69,7 @@ function draw() {
     // Check if snake eats the food
     if (head.x === food.x && head.y === food.y) {
         score += 1;
-        food = { x: Math.floor(Math.random() * canvasSize / box) * box, y: Math.floor(Math.random() * canvasSize / box) * box };
+        generateFood();
     } else {
         snake.pop();
     }
