@@ -1,13 +1,18 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
-const box = 20;
+const box = 40;
 const canvasSize = 800;
 
 let snake = [{ x: box * 5, y: box * 5 }];
 let direction = 'RIGHT';
 let food = { x: Math.floor(Math.random() * canvasSize / box) * box, y: Math.floor(Math.random() * canvasSize / box) * box };
 let score = 0;
+
+const headImage = new Image();
+headImage.src = 'crazybitch.png'; 
+
+const bodyImages = [];
 
 document.addEventListener('keydown', changeDirection);
 
@@ -30,7 +35,6 @@ function generateFood() {
             y: Math.floor(Math.random() * canvasSize / box) * box
         };
 
-        // Check if the new food position is on the snake
         snake.forEach(part => {
             if (part.x === newFood.x && part.y === newFood.y) {
                 isFoodOnSnake = true;
@@ -47,10 +51,13 @@ generateFood();
 function draw() {
     ctx.clearRect(0, 0, canvasSize, canvasSize);
     
-    // Draw snake
-    snake.forEach(part => {
-        ctx.fillStyle = 'lime';
-        ctx.fillRect(part.x, part.y, box, box);
+    snake.forEach((part, index) => {
+        if (index === 0) {
+            ctx.drawImage(headImage, part.x, part.y, box, box); 
+        } else {
+            ctx.fillStyle = 'lime';
+            ctx.fillRect(part.x, part.y, box, box);
+        }
     });
 
     // Draw food
