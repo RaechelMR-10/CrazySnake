@@ -11,6 +11,8 @@ let score = 0;
 
 const headImage = new Image();
 headImage.src = 'crazybitch.png'; 
+const foodImage = new Image(); // Create a new Image object for the food
+foodImage.src = 'R.png';
 
 const bodyImages = [];
 
@@ -55,14 +57,12 @@ function draw() {
         if (index === 0) {
             ctx.drawImage(headImage, part.x, part.y, box, box); 
         } else {
-            ctx.fillStyle = 'lime';
-            ctx.fillRect(part.x, part.y, box, box);
+            ctx.drawImage(headImage, part.x, part.y, box, box);
         }
     });
 
     // Draw food
-    ctx.fillStyle = 'red';
-    ctx.fillRect(food.x, food.y, box, box);
+    ctx.drawImage(foodImage, food.x, food.y, box, box);
 
     // Move snake
     let head = { x: snake[0].x, y: snake[0].y };
@@ -88,4 +88,4 @@ function draw() {
     }
 }
 
-const game = setInterval(draw, 100);
+const game = setInterval(draw, 250);
