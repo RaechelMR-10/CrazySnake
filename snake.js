@@ -3,13 +3,14 @@ const ctx = canvas.getContext('2d');
 
 const box = 40;
 const canvasSize = 800;
+const snakeSpeed = 100;
 
 let snake;
 let direction;
 let food;
 let score;
 let gameInterval;
-let isPaused = false; // Track pause state
+let isPaused = false;
 
 const headImage = new Image();
 headImage.src = 'crazybitch.png'; 
@@ -107,28 +108,25 @@ function draw() {
 }
 
 document.getElementById('startButton').addEventListener('click', function() {
-    if (!gameInterval) {
-        resetGame();
-        gameInterval = setInterval(draw, 250);
-        document.getElementById('startButton').style.display = 'none';
-    }
+    resetGame();
+    gameInterval = setInterval(draw, snakeSpeed);
+    document.getElementById('startButton').style.display = 'none';
 });
 
 document.getElementById('pauseButton').addEventListener('click', function() {
-    if (gameInterval) {
-        if (isPaused) {
-            gameInterval = setInterval(draw, 250);
-            document.getElementById('pauseButton').textContent = 'Pause';
-        } else {
-            clearInterval(gameInterval);
-            gameInterval = null;
-            document.getElementById('pauseButton').textContent = 'Unpause';
-        }
-        isPaused = !isPaused;
+    const button = document.getElementById('pauseButton');
+    if(isPaused) {
+        gameInterval = setInterval(draw, snakeSpeed);
+        button.innerHTML = 'Pause';
+        isPaused = false;
+    } else {
+        clearInterval(gameInterval);
+        button.innerHTML = 'Play';
+        isPaused = true;
     }
 });
 
 document.getElementById('restartButton').addEventListener('click', function() {
     resetGame();
-    gameInterval = setInterval(draw, 250);
+    gameInterval = setInterval(draw, snakeSpeed);
 });
