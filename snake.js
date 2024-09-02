@@ -73,8 +73,7 @@ function draw() {
         if (index === 0) {
             ctx.drawImage(headImage, part.x, part.y, box, box); 
         } else {
-            ctx.fillStyle = 'lime';
-            ctx.fillRect(part.x, part.y, box, box);
+            ctx.drawImage(foodImage, part.x, part.y, box, box);
         }
     });
 
